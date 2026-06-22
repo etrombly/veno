@@ -8,7 +8,7 @@ pub enum VersionPart<'a> {
     Text(&'a str),
 }
 
-fn parse_version(version: &str) -> Vec<VersionPart> {
+fn parse_version<'a>(version: &'a str) -> Vec<VersionPart<'a>> {
     let separators = ['.', '-', ':'];
 
     version
