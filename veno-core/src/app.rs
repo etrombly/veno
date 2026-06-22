@@ -19,9 +19,10 @@ pub struct AppState {
 impl AppState {
     pub fn init(file_path: &str) -> Result<Self> {
         let app_config = AppConfig::load(file_path)?;
-        let app_state = app_config
+        let app_state: AppState = app_config
             .try_deserialize()
             .context("Could not deserialize app config")?;
+
         Ok(app_state)
     }
 
