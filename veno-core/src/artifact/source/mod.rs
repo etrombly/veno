@@ -19,8 +19,8 @@ pub enum Source {
     ArtifactHub(ArtifactHubSource),
 }
 
-impl Source {
-    pub async fn check_new_version(&self, current_version: &str) -> Result<Option<String>> {
+impl SourceChecker for Source {
+    async fn check_new_version(&self, current_version: &str) -> Result<Option<String>> {
         match self {
             Source::GitHub(source) => source.check_new_version(current_version).await,
             Source::DockerHub(source) => source.check_new_version(current_version).await,
@@ -29,6 +29,6 @@ impl Source {
     }
 }
 
-trait SourceChecker: Send {
+pub(crate) trait SourceChecker: Send {
     async fn check_new_version(&self, current_version: &str) -> Result<Option<String>>;
 }

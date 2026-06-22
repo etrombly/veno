@@ -1,3 +1,4 @@
+use crate::artifact::source::SourceChecker;
 use anyhow::{Context, Result};
 use futures::future::join_all;
 use serde::Deserialize;
