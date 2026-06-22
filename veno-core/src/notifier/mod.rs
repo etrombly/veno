@@ -17,7 +17,29 @@ static DEFAULT_MESSAGE_PREFIX: &str = "New version available for";
 pub struct Notifier {
     pub name: String,
     pub sink: Sink,
-    pub artifact_ids: Vec<String>,
+    pub artifact_ids: ArtifactSelection,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+#[serde(untagged)]
+pub enum ArtifactSelection {
+    All(AllMarker),
+    Specific(Vec<String>),
+}
+
+impl ArtifactSelection {
+    pub fn contains(&self, other: &str) -> bool {
+        match self {
+            ArtifactSelection::All(_) => true,
+            ArtifactSelection::Specific(ids) => ids.contains(&other.to_string()),
+        }
+    }
+}
+
+#[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "lowercase")]
+pub enum AllMarker {
+    All,
 }
 
 #[derive(Deserialize, Debug, Clone)]

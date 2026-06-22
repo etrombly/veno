@@ -1,12 +1,12 @@
 use serde::Serialize;
 use utoipa::ToSchema;
-use veno_core::notifier::{Notifier, Sink};
+use veno_core::notifier::{ArtifactSelection, Notifier, Sink};
 
 #[derive(Serialize, Debug, Clone, ToSchema)]
 pub struct NotifierResponse {
     pub name: String,
     pub sink: SinkDto,
-    pub artifact_ids: Vec<String>,
+    pub artifact_ids: ArtifactSelectionDto,
 }
 
 #[derive(Serialize, Debug, Clone, ToSchema)]
@@ -22,6 +22,19 @@ pub enum SinkDto {
     Webhook(WebhookSink),
     #[serde(rename = "console")]
     Console(ConsoleSink),
+}
+
+#[derive(Serialize, Debug, Clone, ToSchema)]
+#[serde(untagged)]
+pub enum ArtifactSelectionDto {
+    All(AllMarker),
+    Specific(Vec<String>),
+}
+
+#[derive(Serialize, Debug, Clone, ToSchema)]
+#[serde(rename_all = "lowercase")]
+pub enum AllMarker {
+    All,
 }
 
 #[derive(Debug, Clone, Serialize, ToSchema)]
@@ -56,7 +69,7 @@ impl From<Notifier> for NotifierResponse {
         Self {
             name: value.name,
             sink: value.sink.into(),
-            artifact_ids: value.artifact_ids,
+            artifact_ids: value.artifact_ids.into(),
         }
     }
 }
@@ -81,6 +94,15 @@ impl From<Sink> for SinkDto {
                 webhook: webhook.webhook,
             }),
             Sink::Console(_) => SinkDto::Console(ConsoleSink {}),
+        }
+    }
+}
+
+impl From<ArtifactSelection> for ArtifactSelectionDto {
+    fn from(value: ArtifactSelection) -> Self {
+        match value {
+            ArtifactSelection::All(_) => ArtifactSelectionDto::All(AllMarker::All),
+            ArtifactSelection::Specific(x) => ArtifactSelectionDto::Specific(x),
         }
     }
 }
