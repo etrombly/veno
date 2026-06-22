@@ -1,5 +1,4 @@
 use serde::Deserialize;
-use serde_json::json;
 
 use super::SinkSender;
 
