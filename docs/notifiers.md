@@ -1,8 +1,22 @@
 # Notifiers
 
+Each notifier declares which artifacts it should check via `artifact_ids`.
+
+Use an array to target specific artifacts:
+
+```json
+"artifact_ids": ["rust", "nginx_dockerhub"]
+```
+
+Use `"all"` to target every configured artifact:
+
+```json
+"artifact_ids": "all"
+```
+
 ## Email
 
-```
+```jsonc
 {
   "name": "private_email",
   "sink": {
@@ -22,7 +36,7 @@
 
 The webhook value is just the `url` to the webhook. `Slack` and `Google Chat` use the webhook logic under the hood but they will offer a default chat card in the future.
 
-```
+```json
 {
   "name": "generic_webhook",
   "sink": {
@@ -35,7 +49,7 @@ The webhook value is just the `url` to the webhook. `Slack` and `Google Chat` us
 
 ## Slack
 
-```
+```json
 {
   "name": "team_slack",
   "sink": {
@@ -48,13 +62,25 @@ The webhook value is just the `url` to the webhook. `Slack` and `Google Chat` us
 
 ## Google Chat
 
-```
+```json
 {
   "name": "team_google_chat",
   "sink": {
     "type": "google_chat",
     "webhook": "..."
   },
-  "artifact_ids": ["rust", "keycloak_helm_chart", "nginx_dockerhub"]
+  "artifact_ids": "all"
+}
+```
+
+## Console
+
+```json
+{
+  "name": "local_console",
+  "sink": {
+    "type": "console"
+  },
+  "artifact_ids": "all"
 }
 ```

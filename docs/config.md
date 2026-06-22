@@ -8,8 +8,8 @@
       "source": {
         "type": "github",
         "identifier": "rust-lang/rust"
-      },
-    }
+      }
+    },
     {
       "id": "kubernetes",
       "name": "Kubernetes",
@@ -17,7 +17,7 @@
       "source": {
         "type": "github",
         "identifier": "kubernetes/kubernetes"
-      },
+      }
     }
   ],
   "notifiers": [
@@ -39,8 +39,8 @@
       "sink": {
         "type": "google_chat",
         "webhook": "https://google_chat.com/webhook"
-      }
-      "artifact_ids": ["rust", "kubernetes"]
+      },
+      "artifact_ids": "all"
     }
   ]
 }

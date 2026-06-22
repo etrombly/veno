@@ -32,6 +32,16 @@ You find the binary in `target/release/veno-cli`.
 veno-cli --config path/to/config.json
 ```
 
+**Run as Web Service:**
+
+You find the binary in `target/release/veno-web`.
+
+```sh
+veno-web --config path/to/config.json
+```
+
+The web service exposes the API below `/api/v1` and serves the Redoc documentation at `/redoc`.
+
 > [!Tip]
 > We recommend to use the binary as a cron job (or any other scheduling task manager) in your cluster, so you can get the updates in the right time.
 

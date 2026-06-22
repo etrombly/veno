@@ -5,6 +5,7 @@
 | **Status**   | **Features** |
 | ------------ | ------------ |
 | ✅ Supported | cli          |
+| ✅ Supported | web service  |
 
 ## Sources
 
@@ -20,6 +21,7 @@
 | ---------------- | --------------- |
 | ✅ Supported     | Generic Webhook |
 | ✅ Supported     | Email           |
+| ✅ Supported     | Console         |
 | 🚧 Basic support | Slack           |
 | 🚧 Basic support | Google Chat     |
 
@@ -28,5 +30,6 @@
 | **Status**   | **Features** |
 | ------------ | ------------------------------------ |
 | ✅ Supported | multiple artifacts for a notifier    |
+| ✅ Supported | all artifacts for a notifier         |
 | ✅ Supported | environment variables in config file |
 | ✅ Supported | multiple recipients for email sink   |
