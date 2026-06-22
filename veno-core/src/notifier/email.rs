@@ -8,6 +8,8 @@ use tracing::error;
 
 use super::SinkSender;
 
+const DEFAULT_SUBJECT: &str = "VENO: New version available!";
+
 #[derive(Deserialize, Clone, Debug)]
 pub struct EmailSink {
     pub host: String,
@@ -15,6 +17,7 @@ pub struct EmailSink {
     pub username: String,
     pub password: String,
     pub to: Vec<String>,
+    pub subject: Option<String>,
 }
 
 impl SinkSender for EmailSink {
@@ -28,7 +31,7 @@ impl SinkSender for EmailSink {
         };
 
         self.to.iter().for_each(|to| {
-            let email = match create_message(&self.username, to, message) {
+            let email = match create_message(&self.username, to, message, self.subject.as_deref()) {
                 Ok(email) => email,
                 Err(e) => {
                     error!("Failed to create email: {:?}", e);
@@ -43,11 +46,11 @@ impl SinkSender for EmailSink {
     }
 }
 
-fn create_message(from: &str, to: &str, message: &str) -> Result<Message> {
+fn create_message(from: &str, to: &str, message: &str, subject: Option<&str>) -> Result<Message> {
     let email = Message::builder()
         .from(format!("VENO <{}>", from).parse()?)
         .to(to.parse()?)
-        .subject("VENO: New version available!")
+        .subject(subject.unwrap_or(DEFAULT_SUBJECT))
         .header(ContentType::TEXT_PLAIN)
         .body(message.to_string())
         .unwrap();

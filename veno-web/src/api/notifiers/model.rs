@@ -49,6 +49,7 @@ pub struct EmailSink {
     pub username: String,
     pub password: String,
     pub to: Vec<String>,
+    pub subject: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, ToSchema)]
@@ -86,6 +87,7 @@ impl From<Sink> for SinkDto {
                 username: String::from("[REDACTED]"),
                 password: String::from("[REDACTED]"),
                 to: email.to,
+                subject: email.subject,
             }),
             Sink::GoogleChat(google) => SinkDto::GoogleChat(GoogleChatSink {
                 webhook: google.webhook,

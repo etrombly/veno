@@ -26,7 +26,7 @@ Use `"all"` to target every configured artifact:
     "username": "username",
     "password": "${EMAIL_PASSWORD}",
     "to": "recipient@somemail.com",
-    "subject": "New version available" // optional - default: "New version available"
+    "subject": "New version available" // optional - default: "VENO: New version available"
   },
   "artifact_ids": ["rust"]
 }
